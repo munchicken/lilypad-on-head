@@ -1,0 +1,15 @@
+[
+{
+  "modid": "munchicken_lilypadonhead",
+  "name": "Lilypad On Head",
+  "description": "Lilypad on Head allows players to wear a lily pad on their head.",
+  "version": "v1.7.2-0.1",
+  "mcversion": "1.7.2",
+  "url": "http://www.munchicken.com/software/",
+  "authorList": ["Munchicken"],
+  "credits": "Development by Munchicken.",
+  "logoFile": "",
+  "screenshots": [""],
+  "dependencies": ["Forge"]
+}
+]
