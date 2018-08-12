@@ -17,7 +17,7 @@ public class LilypadOnHead {
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         lilypadhat = new ItemLilyPadHat();
-        GameRegistry.registerItem(lilypadhat, "LilyPadHat");
+        GameRegistry.registerItem(lilypadhat, "lilypadhat");
     }
 
     @EventHandler

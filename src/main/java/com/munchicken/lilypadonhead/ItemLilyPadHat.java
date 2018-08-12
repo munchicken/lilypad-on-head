@@ -5,7 +5,7 @@ import net.minecraft.item.Item;
 
 public class ItemLilyPadHat extends Item {
     public ItemLilyPadHat() {
-        setUnlocalizedName(LilypadOnHead.MODID + "_" + "LilyPadHat");
+        setUnlocalizedName(LilypadOnHead.MODID + "_" + "lilypadhat");
         setCreativeTab(CreativeTabs.tabMisc);
     }
 }
