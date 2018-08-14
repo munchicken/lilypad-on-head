@@ -7,6 +7,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.EnumHelper;
 
 @Mod(modid = LilypadOnHead.MODID, version = LilypadOnHead.VERSION)
@@ -16,6 +17,8 @@ public class LilypadOnHead {
 
     // armor
     public static Item lilypadOnHeadHelmet;
+
+    //armor
     ArmorMaterial lilypadOnHeadArmor = EnumHelper.addArmorMaterial("lilypadOnHeadArmor",20, new int[] {3,7,6,3},10);
 
     @EventHandler
@@ -23,6 +26,11 @@ public class LilypadOnHead {
         //armor
         lilypadOnHeadHelmet = new ItemLilypadOnHeadArmor(lilypadOnHeadArmor, 0, "lilypadOnHeadHelmet");
         GameRegistry.registerItem(lilypadOnHeadHelmet,"LilypadOnHeadHelmet");
+
+        //event handler
+        LilypadOnHeadEventHandler handler = new LilypadOnHeadEventHandler();
+        GameRegistry.registerWorldGenerator(handler,0);
+        MinecraftForge.EVENT_BUS.register(handler);
     }
 
     @EventHandler
