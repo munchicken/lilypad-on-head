@@ -4,14 +4,18 @@ import cpw.mods.fml.common.IWorldGenerator;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ChatStyle;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
+import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.event.world.BlockEvent;
 
 import java.util.Random;
 
 public class LilypadOnHeadEventHandler implements IWorldGenerator {
-    Random random = new Random();
+    private Random random = new Random();
 
     @Override
     public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
@@ -23,5 +27,15 @@ public class LilypadOnHeadEventHandler implements IWorldGenerator {
         if(event.block == Blocks.waterlily)
             if (random.nextInt(5) == 0)
                 event.drops.add(new ItemStack(LilypadOnHead.lilypadOnHeadHelmet));
+    }
+
+    @SubscribeEvent
+    public void chatLabels(ServerChatEvent event){
+        if (event.player.getCurrentArmor(3) != null){
+            System.out.println("test");
+            if (event.player.getCurrentArmor(3).getItem() instanceof ItemLilypadOnHeadArmor){
+                event.component.appendSibling(new ChatComponentText("   says " + event.player.getDisplayName() + " while wearing a lilypad hat.").setChatStyle(new ChatStyle().setItalic(true).setColor(EnumChatFormatting.GREEN)));
+            }
+        }
     }
 }
