@@ -1,8 +1,11 @@
 package com.munchicken.lilypadonhead;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Vec3;
+import net.minecraft.world.World;
 
 public class ItemLilypadOnHeadArmor extends ItemArmor {
     public ItemLilypadOnHeadArmor(ArmorMaterial material, int armorType, String name) {
@@ -17,6 +20,19 @@ public class ItemLilypadOnHeadArmor extends ItemArmor {
         } else {
             System.out.println("Invalid Item");
             return null;
+        }
+     }
+
+     public void onArmorTick(World world, EntityPlayer player, ItemStack itemStack){
+         Vec3 vec = player.getLookVec();
+         double x = player.posX + vec.xCoord/3;
+         double y = player.posY;
+         double z = player.posZ + vec.zCoord/3;
+
+        if (player.worldObj.isRemote){
+            if(itemStack.getItem() == LilypadOnHead.lilypadOnHeadHelmet){
+                player.worldObj.spawnParticle("dripWater",x,y,z,0,0,0);
+            }
         }
      }
 }
