@@ -1,5 +1,4 @@
-[
-{
+[{
   "modid": "munchicken_lilypadonhead",
   "name": "Lilypad On Head",
   "description": "Lilypad on Head allows players to wear a lily pad on their head.",
@@ -11,5 +10,4 @@
   "logoFile": "",
   "screenshots": [""],
   "dependencies": ["Forge"]
-}
-]
+}]

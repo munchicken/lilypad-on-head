@@ -5,7 +5,6 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityFishHook;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 import net.minecraft.world.World;
@@ -42,7 +41,7 @@ public class EntityLilypadOnHeadHook extends EntityFishHook {
             {
                 ItemStack itemstack = this.field_146042_b.getCurrentEquippedItem();
 
-                if (this.field_146042_b.isDead || !this.field_146042_b.isEntityAlive() || itemstack == null || itemstack.getItem() != Items.fishing_rod || this.getDistanceSqToEntity(this.field_146042_b) > 1024.0D)
+                if (this.field_146042_b.isDead || !this.field_146042_b.isEntityAlive() || itemstack == null || itemstack.getItem() != LilypadOnHead.lilypadOnHeadFishingPole || this.getDistanceSqToEntity(this.field_146042_b) > 1024.0D)
                 {
                     this.setDead();
                     this.field_146042_b.fishEntity = null;

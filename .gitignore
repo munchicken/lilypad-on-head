@@ -1,3 +1,7 @@
 *.iml
 *.gradle
 .idea/
+*.bat
+classes/
+gradle/
+MC4Mod/
