@@ -2,8 +2,10 @@ package com.munchicken.lilypadonhead;
 
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
+import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
@@ -17,15 +19,31 @@ public class LilypadOnHead {
 
     // armor
     public static Item lilypadOnHeadHelmet;
+    // items
+    public static Item lilypadOnHeadFishingPole;
 
     //armor
     ArmorMaterial lilypadOnHeadArmor = EnumHelper.addArmorMaterial("lilypadOnHeadArmor",20, new int[] {3,7,6,3},10);
 
+    //proxies
+    @SidedProxy(clientSide = "com.munchicken.lilypadonhead.ClientProxyLilypadOnHead", serverSide = "com.munchicken.lilypadonhead.CommonProxyLilypadOnHead")
+    public static CommonProxyLilypadOnHead proxy;
+
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
+        //proxies
+        proxy.registerRendering();
+
         //armor
         lilypadOnHeadHelmet = new ItemLilypadOnHeadArmor(lilypadOnHeadArmor, 0, "lilypadOnHeadHelmet");
         GameRegistry.registerItem(lilypadOnHeadHelmet,"LilypadOnHeadHelmet");
+
+        //items
+        lilypadOnHeadFishingPole = new ItemLilypadOnHeadFishingPole("lilypadOnHeadFishingPole");
+        GameRegistry.registerItem(lilypadOnHeadFishingPole, "LilypadOnHeadFishingPole");
+
+        //entities
+        EntityRegistry.registerModEntity(EntityLilypadOnHeadHook.class, "lilypadOnHeadHook",1,this,80,3,true);
 
         //event handler
         LilypadOnHeadEventHandler handler = new LilypadOnHeadEventHandler();
