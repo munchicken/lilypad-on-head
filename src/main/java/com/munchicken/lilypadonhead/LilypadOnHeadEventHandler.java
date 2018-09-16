@@ -45,7 +45,9 @@ public class LilypadOnHeadEventHandler implements IWorldGenerator {
     public void newHook(EntityJoinWorldEvent event) {
         if (event.entity.getClass() == EntityFishHook.class) {
             System.out.println("Vanilla hook is spawned");
-
+            EntityFishHook oldHook = (EntityFishHook) event.entity;
+            event.world.spawnEntityInWorld(new EntityLilypadOnHeadFishHook(event.world, oldHook.field_146042_b));
+            event.entity.setDead();
         }
     }
 }
