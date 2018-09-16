@@ -2,6 +2,7 @@ package com.munchicken.lilypadonhead;
 
 import cpw.mods.fml.common.IWorldGenerator;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import net.minecraft.entity.projectile.EntityFishHook;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
@@ -10,6 +11,7 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraftforge.event.ServerChatEvent;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.world.BlockEvent;
 
 import java.util.Random;
@@ -36,6 +38,14 @@ public class LilypadOnHeadEventHandler implements IWorldGenerator {
             if (event.player.getCurrentArmor(3).getItem() instanceof ItemLilypadOnHeadArmor){
                 event.component.appendSibling(new ChatComponentText("   says " + event.player.getDisplayName() + " while wearing a lilypad hat.").setChatStyle(new ChatStyle().setItalic(true).setColor(EnumChatFormatting.GREEN)));
             }
+        }
+    }
+
+    @SubscribeEvent
+    public void newHook(EntityJoinWorldEvent event) {
+        if (event.entity.getClass() == EntityFishHook.class) {
+            System.out.println("Vanilla hook is spawned");
+
         }
     }
 }
