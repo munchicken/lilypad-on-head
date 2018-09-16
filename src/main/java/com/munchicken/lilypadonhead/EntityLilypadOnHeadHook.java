@@ -1,5 +1,7 @@
 package com.munchicken.lilypadonhead;
 
+import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -12,10 +14,18 @@ import net.minecraft.world.WorldServer;
 
 import java.util.List;
 
-public class EntityLilypadOnHeadHook extends EntityFishHook {
+public class EntityLilypadOnHeadHook extends EntityFishHook implements IEntityAdditionalSpawnData {
 
-    public EntityLilypadOnHeadHook(World p_i1764_1_, EntityPlayer player) {
-        super(p_i1764_1_,player);
+    public EntityPlayer angler;
+
+    public EntityLilypadOnHeadHook(World world) {
+        super(world);
+    }
+
+    public EntityLilypadOnHeadHook(World world, EntityPlayer player) {
+        super(world);
+        this.angler = player;
+        this.angler.fishEntity = this;
     }
 
     @Override
@@ -39,12 +49,14 @@ public class EntityLilypadOnHeadHook extends EntityFishHook {
         {
             if (!this.worldObj.isRemote)
             {
-                ItemStack itemstack = this.field_146042_b.getCurrentEquippedItem();
+                ItemStack itemstack = this.angler.getCurrentEquippedItem();
+                System.out.println("Hook checking" + itemstack.getItem());
+                System.out.println(itemstack.getItem() instanceof ItemLilypadOnHeadFishingPole);
 
-                if (this.field_146042_b.isDead || !this.field_146042_b.isEntityAlive() || itemstack == null || itemstack.getItem() != LilypadOnHead.lilypadOnHeadFishingPole || this.getDistanceSqToEntity(this.field_146042_b) > 1024.0D)
+                if (this.angler.isDead || !this.angler.isEntityAlive() || itemstack == null || itemstack.getItem() instanceof ItemLilypadOnHeadFishingPole || this.getDistanceSqToEntity(this.angler) > 1024.0D)
                 {
                     this.setDead();
-                    this.field_146042_b.fishEntity = null;
+                    this.angler.fishEntity = null;
                     return;
                 }
 
@@ -113,7 +125,7 @@ public class EntityLilypadOnHeadHook extends EntityFishHook {
             {
                 Entity entity1 = (Entity)list.get(i);
 
-                if (entity1.canBeCollidedWith() && (entity1 != this.field_146042_b || this.field_146047_aw >= 5))
+                if (entity1.canBeCollidedWith() && (entity1 != this.angler || this.field_146047_aw >= 5))
                 {
                     float f = 0.3F;
                     AxisAlignedBB axisalignedbb = entity1.boundingBox.expand((double)f, (double)f, (double)f);
@@ -141,7 +153,7 @@ public class EntityLilypadOnHeadHook extends EntityFishHook {
             {
                 if (movingobjectposition.entityHit != null)
                 {
-                    if (movingobjectposition.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.field_146042_b), 0.0F))
+                    if (movingobjectposition.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.angler), 0.0F))
                     {
                         this.field_146043_c = movingobjectposition.entityHit;
                     }
@@ -307,7 +319,7 @@ public class EntityLilypadOnHeadHook extends EntityFishHook {
                         else
                         {
                             this.field_146040_ay = MathHelper.getRandomIntegerInRange(this.rand, 100, 900);
-                            this.field_146040_ay -= EnchantmentHelper.func_151387_h(this.field_146042_b) * 20 * 5;
+                            this.field_146040_ay -= EnchantmentHelper.func_151387_h(this.angler) * 20 * 5;
                         }
                     }
 
@@ -331,6 +343,23 @@ public class EntityLilypadOnHeadHook extends EntityFishHook {
                 this.motionZ *= (double)f6;
                 this.setPosition(this.posX, this.posY, this.posZ);
             }
+        }
+    }
+
+    @Override
+    public void writeSpawnData(ByteBuf buffer) {
+        if (this.angler != null) {
+            buffer.writeInt(this.angler.getEntityId());
+        }
+    }
+
+    @Override
+    public void readSpawnData(ByteBuf additionalData) {
+        try {
+            final int anglerId = additionalData.readInt();
+            this.angler = (EntityPlayer) worldObj.getEntityByID(anglerId);
+        } catch (Throwable e) {
+            this.angler = null;
         }
     }
 }

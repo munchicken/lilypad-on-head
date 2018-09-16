@@ -2,7 +2,6 @@ package com.munchicken.lilypadonhead;
 
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.EntityRegistry;
@@ -25,14 +24,8 @@ public class LilypadOnHead {
     //armor
     ArmorMaterial lilypadOnHeadArmor = EnumHelper.addArmorMaterial("lilypadOnHeadArmor",20, new int[] {3,7,6,3},10);
 
-    //proxies
-    @SidedProxy(clientSide = "com.munchicken.lilypadonhead.ClientProxyLilypadOnHead", serverSide = "com.munchicken.lilypadonhead.CommonProxyLilypadOnHead")
-    public static CommonProxyLilypadOnHead proxy;
-
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-        //proxies
-        proxy.registerRendering();
 
         //armor
         lilypadOnHeadHelmet = new ItemLilypadOnHeadArmor(lilypadOnHeadArmor, 0, "lilypadOnHeadHelmet");
