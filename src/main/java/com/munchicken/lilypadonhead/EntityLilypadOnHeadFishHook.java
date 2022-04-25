@@ -13,11 +13,12 @@ public class EntityLilypadOnHeadFishHook extends EntityFishHook implements IEnti
         super(p_i1766_1_, p_i1766_2_);
         this.angler = p_i1766_2_;
         p_i1766_2_.fishEntity = this;
-        System.out.println("spawing my hook");
+        System.out.println("my hook constructor");
     }
 
    @Override
     public void writeSpawnData(ByteBuf buffer) {
+        System.out.println("In writeSpawnData");
         if (this.angler != null) {
             buffer.writeInt(this.angler.getEntityId());
             System.out.println("writing ");
@@ -27,6 +28,7 @@ public class EntityLilypadOnHeadFishHook extends EntityFishHook implements IEnti
 
     @Override
     public void readSpawnData(ByteBuf additionalData) {
+        System.out.println("In readSpawnData");
         try {
             final int anglerId = additionalData.readInt();
             this.angler = (EntityPlayer) worldObj.getEntityByID(anglerId);
